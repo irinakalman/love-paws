@@ -1,0 +1,25 @@
+.cat-profile {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .cat-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  h2 {
+    color: #333;
+    font-size: 24px;
+  }
+  
+  p {
+    color: #666;
+    font-size: 16px;
+  }
+  
