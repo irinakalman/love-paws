@@ -1,0 +1,28 @@
+.msg-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+    }
+
+    .left {
+        display: flex;
+        gap: 20px;
+    }
+
+}
+
+a:has(.msg-box){
+    text-decoration: none;
+}
+
+.profile-pic {
+    width: 60px;
+}
+
+body {
+    margin: 0 14px;
+}

@@ -1,22 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
-import CatProfile from './components/cat-profiles/cat-profiles';
-
+import Profile from './pages/profile/profile';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from './components/layout/layout';
+import Inboxes from './pages/inboxes/inboxes';
+import Inbox from './pages/inbox/inbox';
 
 function App() {
   return (
-    <div className="app">
-      <CatProfile
-        name="Luluka"
-        age="3"
-        description="A playful little cat who loves to chase laser pointers."
-        image="assets/img/luluka.jpg"
-      />
-
-      <CatProfile/>
-      
-      <CatProfile/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Profile/>} />
+          <Route path="profile" element={<Profile/>} />
+          <Route path="inboxes" element={<Inboxes />} />
+          <Route path="inbox" element={<Inbox />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

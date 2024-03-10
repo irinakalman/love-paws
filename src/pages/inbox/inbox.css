@@ -1,0 +1,65 @@
+/* DirectMessagePage.css */
+
+.messagesContainer {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 600px;
+  }
+  
+  .messageExchange {
+    margin-top: 20px;
+  }
+  
+  .message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: black;
+  }
+  
+  .sent {
+    background-color: #007bff;
+    text-align: right;
+  }
+  
+  .received {
+    background-color: #17a2b8;
+  }
+  
+  .timestamp {
+    color: #ddd;
+    font-size: 0.8rem;
+  }
+
+  .sendMessageForm {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    left: 0;
+  }
+  
+  .messageInput {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+  
+  .sendButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .sendButton:hover {
+    background-color: #0056b3;
+  }
+  
