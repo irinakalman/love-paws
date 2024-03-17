@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './inbox.css';
 
-const apiKey = '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'; // Replace with your actual OpenAI API key
+const apiKey = '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'; // Replace with your actual OpenAI API key
 
 function DirectMessagePage() {
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hey, how's it going?", timestamp: '10:01 AM', type: 'received' },
-  ]);
+  let { catId } = useParams();
+
+  let inboxes = JSON.parse(localStorage.getItem("inboxesSaved"));
+  console.log(inboxes)
+  let name = inboxes[catId].name
+
+  const [messages, setMessages] = useState(inboxes[catId].messages);
 
   const [inputMessage, setInputMessage] = useState('');
 
@@ -14,16 +19,18 @@ function DirectMessagePage() {
     event.preventDefault();
     if (!inputMessage.trim()) return; // Prevent sending empty messages
 
+    // Sent
     let newMessages = {
-      id: messages.length + 1,
       text: inputMessage,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       type: 'sent' // Assuming all new messages are sent by the user
     };
     setMessages([...messages, newMessages]);
+    // localStorage.setItem("inboxesSaved", inboxes);
 
     setInputMessage(''); // Reset input field
 
+    // Received
     await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -33,7 +40,7 @@ function DirectMessagePage() {
         body: JSON.stringify({
             model: 'gpt-3.5-turbo',
             messages: [
-                { role: 'system', content: 'You are a cute cat that always refers to cat things and always asks questions back to maintain a conversation.' },
+                { role: 'system', content: 'You are a cute cat named' + name + ' that always refers to cat things and always asks questions back to maintain a conversation.' },
                 { role: 'user', content: inputMessage }
             ],
             temperature: 0.7
@@ -41,12 +48,16 @@ function DirectMessagePage() {
     })
     .then(response => response.json())
     .then(data => {      
-        setMessages((m) => [...m, {
-            id: m.length + 1,
-            text: data.choices[0].message.content,
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            type: 'received'
-        }]);
+        let newMessage = {
+          text: data.choices[0].message.content,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          type: 'received'
+        }
+        setMessages((m) => [...m, newMessage]);
+
+        inboxes = JSON.parse(localStorage.getItem("inboxesSaved"));
+        inboxes[catId].messages.push(newMessage);
+        localStorage.setItem("inboxesSaved", JSON.stringify(inboxes));
     })
     .catch(error => {
         console.error('Error:', error);
@@ -55,10 +66,10 @@ function DirectMessagePage() {
 
   return (
     <div className="messagesContainer">
-      <h2>Conversation</h2>
+      <h2>Conversation with {name}</h2>
       <div className="messageExchange">
-        {messages.map((message) => (
-          <div key={message.id} className={`message ${message.type}`}>
+        {messages.map((message, index) => (
+          <div key={index} className={`message ${message.type}`}>
             <div className="text">{message.text}</div>
             <div className="timestamp">{message.timestamp}</div>
           </div>

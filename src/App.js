@@ -15,7 +15,7 @@ function App() {
           <Route index element={<Profile/>} />
           <Route path="profile" element={<Profile/>} />
           <Route path="inboxes" element={<Inboxes />} />
-          <Route path="inbox" element={<Inbox />} />
+          <Route path="inbox/:catId" element={<Inbox />} />
         </Route>
       </Routes>
     </BrowserRouter>
